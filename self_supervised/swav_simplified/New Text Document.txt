@@ -1,0 +1,7 @@
+python -u main_swav.py --epochs 100 --batch_size 128 --base_lr 0.01 --final_lr 0.00001 --warmup_epochs 10 --start_warmup 0.3 --arch resnet18 --freeze_prototypes_niters 5000 --checkpoint_freq 3
+
+
+
+
+
+python -u main_swav.py --nmb_crops 2 6 --size_crops 224 96 --min_scale_crops 0.14 0.05 --max_scale_crops 1. 0.14 --crops_for_assign 0 1 --queue_length 3840 --batch_size 128 --base_lr 0.5 --final_lr 0.0005 --warmup_epochs 0 --arch resnet50 
