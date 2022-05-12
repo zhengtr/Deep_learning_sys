@@ -318,6 +318,13 @@ class MainModel(nn.Module):
         self.backward_G()
         self.opt_G.step()
 
+    def setup_RGB(self, data):
+        self.L = data['L'].to(self.device)
+        self.ab = data['ab'].to(self.device)
+        self.O = data['O'].to(self.device)
+    def forward_RGB(self):
+        self.my_fake_color = self.net_G(self.O)
+
 def init_weights(net, init='norm', gain=0.02):
     def init_func(m):
         classname = m.__class__.__name__
@@ -425,13 +432,14 @@ class ResUNetDataSet(Dataset):
     def __getitem__(self, idx):
         img = Image.open(self.paths[idx]).convert("RGB")
         img = self.transforms(img)
-        imgO = np.transpose(img, (2, 0, 1)).astype(np.float32)
+        # imgO = np.transpose(img, (2, 0, 1)).astype(np.float32)
         img = np.array(img)
         img_lab = rgb2lab(img).astype("float32")  # Converting RGB to L*a*b
         img_lab = transforms.ToTensor()(img_lab)
         L = img_lab[[0], ...] / 50. - 1.  # Between -1 and 1
         ab = img_lab[[1, 2], ...] / 110.  # Between -1 and 1
-
+        temp = L.clone().detach()
+        imgO = torch.cat((temp, temp, temp), 0)
         return {'L': L, 'ab': ab, 'O': imgO}
 
     def __len__(self):
