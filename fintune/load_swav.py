@@ -376,16 +376,17 @@ def load_pretrained_swav(ckp_path):
         print("Load pretrained model with msg: {}".format(msg))
     else:
         raise Exception("No pretrained weights found")
+
+    model.padding = nn.Identity()
+    model.projection_head = nn.Identity()
+    model.prototypes = nn.Identity()
+    model.avgpool = nn.Identity()
+    model.fc = nn.Identity()
     return model
 
 if __name__ == "__main__":
     # backbone = torch.load("../swav_ckp_190.pth")
     backbone = load_pretrained_swav("../swav_ckp_190.pth")
-    backbone.padding = nn.Identity()
-    backbone.projection_head = nn.Identity()
-    backbone.prototypes = nn.Identity()
-    backbone.avgpool = nn.Identity()
-    backbone.fc = nn.Identity()
     print("Load pretrained swav backbone from checkpoint")
     for name, child in backbone.named_children():
         print(f'name is: {name}')
