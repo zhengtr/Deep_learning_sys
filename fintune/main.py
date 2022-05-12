@@ -391,7 +391,7 @@ class GANLoss(nn.Module):
         loss = self.loss(preds, labels)
         return loss
 # Train Model
-def train_model(model, train_dl, epochs, display_every=200, save=False):
+def train_model(model, val_dl, epochs, display_every=200, save=False):
     data = next(iter(val_dl)) # getting a batch for visualizing the model output after fixed intrvals
     for e in range(epochs):
         loss_meter_dict = create_loss_meters() # function returing a dictionary of objects to
@@ -463,6 +463,8 @@ def train_resUNet(epochs=50, save=True):
     model50 = torch.hub.load('facebookresearch/swav:main', 'resnet50')
     body = nn.Sequential(*list(model50.children())[:-2])
     net_G = DynamicUnet(body, 2, (256, 256)).to(device)
+    #If you want to use your own model uncommon then following
+    #net_G.load_state_dict(args.modelPath, map_location=device)
     opt = optim.Adam(net_G.parameters(), lr=1e-4)
     criterion = nn.L1Loss()
 
