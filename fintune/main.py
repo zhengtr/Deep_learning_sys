@@ -27,6 +27,8 @@ parser.add_argument("--train", type=str2bool, default=True)
 parser.add_argument("--modelPath", type=str, default="default.pt")
 parser.add_argument("--saveModel", type=str2bool, default=True)
 parser.add_argument("--epochs", type=int, default=50)
+parser.add_argument("--visualNum", type=int, default=5)
+parser.add_argument("--visualFreq", type=int, default=1)
 args = parser.parse_args()
 
 Path.ls = lambda x: list(x.iterdir())
@@ -322,6 +324,7 @@ class MainModel(nn.Module):
         self.L = data['L'].to(self.device)
         self.ab = data['ab'].to(self.device)
         self.O = data['O'].to(self.device)
+
     def forward_RGB(self):
         self.my_fake_color = self.net_G(self.O)
 
@@ -482,22 +485,38 @@ def train_resUNet(epochs=50, save=True):
     if save:
         torch.save(net_G.state_dict(), args.modelPath)
 
-def eval_ResUNet_model(model, epochs, display_every=200, save=False):
+def eval_model(model, save=True):
     val_loader = make_ResUNet_dataloaders(paths=train_paths, split='val')
-    data = next(iter(val_loader)) # getting a batch for visualizing the model output after fixed intrvals
-    for e in range(epochs):
-        loss_meter_dict = create_loss_meters() # function returing a dictionary of objects to
-        i = 0                                  # log the losses of the complete network
-        for data in train_dl:
-            model.setup_input(data)
-            model.optimize()
-            update_losses(model, loss_meter_dict, count=data['L'].size(0)) # function updating the log objects
-            i += 1
-            if i % display_every == 0:
-                print(f"\nEpoch {e+1}/{epochs}")
-                print(f"Iteration {i}/{len(train_dl)}")
-                log_results(loss_meter_dict) # function to print out the losses
-                visualize_eval(model, data, save=save) # function displaying the model's outputs
+    n = 0
+    q = 0
+    for data in val_loader:
+        if n > args.visualNum:
+            break
+        if q % args.visualFreq == 0:
+            with torch.no_grad():
+                model.setup_RGB(data)
+                model.forward_RGB()
+            fake_color = model.my_fake_color.detach()
+            real_color = model.ab
+            L = model.L
+            fake_imgs = lab_to_rgb(L, fake_color)
+            real_imgs = lab_to_rgb(L, real_color)
+            fig = plt.figure(figsize=(15, 8))
+            for i in range(2):
+                ax = plt.subplot(3, 5, i + 1)
+                ax.imshow(L[i][0].cpu(), cmap='gray')
+                ax.axis("off")
+                ax = plt.subplot(3, 5, i + 1 + 5)
+                ax.imshow(fake_imgs[i])
+                ax.axis("off")
+                ax = plt.subplot(3, 5, i + 1 + 10)
+                ax.imshow(real_imgs[i])
+                ax.axis("off")
+            plt.show()
+            n+=1
+            if save:
+                fig.savefig(f"colorization_{time.time()}.png")
+        q+=1
 
 def main():
 
@@ -521,10 +540,6 @@ if __name__ == "__main__":
         train_resUNet(epochs=args.epochs, save=args.saveImage)
     else:
         print("start Eval")
-        # net_G = build_res_unet(n_input=1, n_output=2, size=256)
-        # net_G.load_state_dict(torch.load(args.modelPath, map_location=device))
-        # model = MainModel(net_G=net_G)
-        # train_model(model, train_dl, 20, save=args.saveImage)
-        # eval_ResUNet_model(model, )
-        model = load_ResUNet()
-        eval_ResUNet_model(model, 5)
+        uNet = load_ResUNet()
+        model = MainModel(net_G=uNet)
+        eval_model(model, args.saveImage)
