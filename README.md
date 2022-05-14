@@ -1,9 +1,9 @@
-# CSCI-GA 3033-091 (Deep Learning System, Spring 2022) Final Project.
-## Courant Institute of Mathematical Sciences - New York University
+# CSCI-GA 3033-091 (Deep Learning System, Spring 2022) Final Project
 ## Image-to-Image Traslation using unsupervised pretrained backbone
 
 Created by *Tanran Zheng* and *Yuxiang Zhu*.
 
+Courant Institute of Mathematical Sciences - New York University
 # Introduction
 #TODO: briefly introduce our project in a few sentences
 # Demo
