@@ -386,7 +386,7 @@ def load_pretrained_swav(ckp_path):
 
 if __name__ == "__main__":
     # backbone = torch.load("../swav_ckp_190.pth")
-    backbone = load_pretrained_swav("../swav_ckp_190.pth")
+    backbone = load_pretrained_swav("swav_ckp_190.pth")
     print("Load pretrained swav backbone from checkpoint")
     for name, child in backbone.named_children():
         print(f'name is: {name}')

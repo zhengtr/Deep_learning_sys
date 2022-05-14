@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 from skimage.color import rgb2lab, lab2rgb
 import argparse
 from str2bool import str2bool
+from load_swav import load_pretrained_swav
 
 parser = argparse.ArgumentParser(description='Transfer Resnet50 to Unet')
 parser.add_argument("--saveImage", type=str2bool, default=False)
@@ -236,10 +237,14 @@ from torch import nn, optim
 
 def build_res_unet(n_input=1, n_output=2, size=256):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model50 = torch.hub.load('facebookresearch/swav:main', 'resnet50')
+    model50 = load_pretrained_swav("/content/drive/My Drive/swav_ckp_190.pth")
+    body = nn.Sequential(*list(model50.children())[:-2])
+    net_G = DynamicUnet(body, 2, (256, 256)).to(device)
+    net_G = net_G.to(device)
+    # model50 = torch.hub.load('facebookresearch/swav:main', 'resnet50')
     # body = nn.Sequential(*list(model50.children())[:-2])
-    body = create_body(resnet50, pretrained=True, n_in=n_input, cut=-2)
-    net_G = DynamicUnet(body, n_output, (size, size)).to(device)
+    # body = create_body(resnet50, pretrained=True, n_in=n_input, cut=-2)
+    # net_G = DynamicUnet(body, n_output, (size, size)).to(device)
     return net_G
 
 
@@ -471,11 +476,17 @@ def pretrain_ResUNet_generator(net_G, train_dl, opt, criterion, epochs):
         print(f"L1 Loss: {loss_meter.avg:.5f}")
 
 def train_resUNet(epochs=50, save=True):
-    model50 = torch.hub.load('facebookresearch/swav:main', 'resnet50')
-    body = nn.Sequential(*list(model50.children())[:-2])
-    net_G = DynamicUnet(body, 2, (256, 256)).to(device)
+    # model50 = load_pretrained_swav(args.modelPath)
+    # model50 = torch.hub.load('facebookresearch/swav:main', 'resnet50')
+    # body = nn.Sequential(*list(model50.children())[:-2])
+    # net_G = DynamicUnet(body, 2, (256, 256)).to(device)
     #If you want to use your own model uncommon then following
     #net_G.load_state_dict(torch.load(args.modelPath, map_location=device))
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model50 = load_pretrained_swav("swav_ckp_190.pth")
+    body = nn.Sequential(*list(model50.children())[:-2])
+    net_G = DynamicUnet(body, 2, (256, 256)).to(device)
+    net_G = net_G.to(device)
     opt = optim.Adam(net_G.parameters(), lr=1e-4)
     criterion = nn.L1Loss()
 
@@ -540,6 +551,10 @@ if __name__ == "__main__":
         train_resUNet(epochs=args.epochs, save=args.saveImage)
     else:
         print("start Eval")
-        uNet = load_ResUNet()
+        # uNet = load_ResUNet()
+        model50 = load_pretrained_swav("swav_ckp_190.pth")
+        body = nn.Sequential(*list(model50.children())[:-2])
+        uNet = DynamicUnet(body, 2, (256, 256)).to(device)
+        uNet = uNet.to(device)
         model = MainModel(net_G=uNet)
         eval_model(model, args.saveImage)
