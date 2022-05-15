@@ -6,7 +6,7 @@ Created by *Tanran Zheng* and *Yuxiang Zhu*.
 Courant Institute of Mathematical Sciences - New York University
 
 
-## (Note: This Readme includes only instructions and info about this repo. For detailed reports, see `final_project_report.pdf`)
+## (Note: This Readme includes only instructions and info about this repo. For detailed reports, see ![final_project_report.pdf](https://github.com/zhengtr/Deep_learning_sys/blob/main/final_project_report.pdf))
 # Introduction
 1. Aming to solve Image-to-Image translation problem with fewer domain specific data.
 2. Leveraging self-supervised learning (SSL) to train backbone with unlabled data.
