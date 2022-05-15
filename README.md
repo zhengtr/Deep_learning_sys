@@ -1,5 +1,5 @@
 # CSCI-GA 3033-091 (Deep Learning System, Spring 2022) Final Project
-## Image-to-Image Traslation using unsupervised pretrained backbone
+## Image-to-Image Traslation with Self-Supervised Pretrained Backbone adn GAN
 
 Created by *Tanran Zheng* and *Yuxiang Zhu*.
 
