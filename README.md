@@ -7,8 +7,10 @@ Courant Institute of Mathematical Sciences - New York University
 # Introduction
 #TODO: briefly introduce our project in a few sentences
 # Demo
-
-#TODO: show demo visualization
+1. Colorization results from different models comparison
+![Colorization results](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/Colorization_Result_Compare.png)
+2. Changing image style to Monet result
+![Change image style](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/Monet.png)
 
 # Setup
 Two parts: (1) pre-train a ResNet-50 backbone with *SwAV* model using unlabeled data, and (2) train a U-Net conditional GAN or CycleGAN for the downstream task. 
@@ -150,10 +152,6 @@ python main.py \
 ![Baseline vs SwAV](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SWAV_COND_GAN_Train_Loss.png)
 3. Training loss between SwAV and SimSiam
 ![SwAV vs SimSiam](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SWAV_SIMSIAM_Train_Loss_compare.png)
-4. Colorization results from different models comparison
-![Colorization results](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/Colorization_Result_Compare.png)
-5. Changing image style to Monet result
-![Change image style](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/Monet.png)
 
 # Major reference
 
