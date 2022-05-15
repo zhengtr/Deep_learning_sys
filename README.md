@@ -4,6 +4,9 @@
 Created by *Tanran Zheng* and *Yuxiang Zhu*.
 
 Courant Institute of Mathematical Sciences - New York University
+
+
+## (Note: This Readme includes only instructions and info about this repo. For detailed reports, see `final_project_report.pdf`)
 # Introduction
 #TODO: briefly introduce our project in a few sentences
 # Demo
@@ -111,7 +114,7 @@ Train Image-to-Image Downstream task
 **Data**  
 Data from COCO dataset
 
-### Module:  fintune (#TODO: change name to conditional_GAN)
+### Module:  fintune
 **Scripts**  
 `main.py`: train conditional GAN model
 `load_swav.py`: contains class and function needed to load swav pretrained backbone checkpoints
@@ -141,8 +144,38 @@ python main.py \
 --givenModel my_model.pth
 ```
 
+### Module:  cycleGAN
+**Scripts**  
+`train.py`: train cycleGAN model
+`test.py`: evaluate cycleGAN model (put pretrained weight in `checkpoints`)
 
+**To run**  
+Put pretrained SwAV in pwd  
+then run  
 
+Colorization:
+```
+python train.py --dataroot ./datasets/mini_colorization --name colorization--model colorization --use_wandb --dataset_mode colorization --input_nc 1 --output_nc 2
+```
+
+Monet:
+```
+python train.py --dataroot ./datasets/monet2photo --name monet2photo --model cycle_gan --use_wandb 
+```
+
+**To test**  
+put pretrained weight in `checkpoints`
+then run  
+
+Colorization:
+```
+python test.py --dataroot ./datasets/mini_colorization --name colorization--model colorization --dataset_mode colorization --input_nc 1 --output_nc 2
+```
+
+Monet:
+```
+python test.py --dataroot ./datasets/monet2photo --name monet2photo --model cycle_gan
+```
 ## Results
 1. Different self-supervised learning model train loss comparison
 ![Self-supervised learning](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SwAV_Train_Loss.png)
