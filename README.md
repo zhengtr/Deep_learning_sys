@@ -10,7 +10,7 @@ Courant Institute of Mathematical Sciences - New York University
 # Introduction
 1. Aming to solve Image-to-Image translation problem with fewer domain specific data.
 2. Leveraging self-supervised learning (SSL) to train backbone with unlabled data.
-3. Applying transfer learning for downstream tasks.
+3. Applying transfer learning to Conditional GAN and CycleGAN for image colorization and Monet style transfer.
 4. Achieving better result with less data comparing to the baseline.
 # Demo
 1. Colorization results from different models comparison
