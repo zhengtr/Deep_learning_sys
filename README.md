@@ -1,5 +1,5 @@
 # CSCI-GA 3033-091 (Deep Learning System, Spring 2022) Final Project
-## Semi-Supervised Image-to-Image Traslation
+## Self-Supervised Image-to-Image Traslation
 
 Created by *Tanran Zheng* and *Yuxiang Zhu*.
 
