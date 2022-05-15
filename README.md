@@ -119,9 +119,28 @@ Data from COCO dataset
 **To run**  
 
 Run
+1. Go to the "*fintune*" folder.
+2. Download "*swav_ckp_190.pth*" model file under the "*fintune*" folder.
+3. Download you **SwAV** pretrained model here. (For example, it's called "*my_model.pth*").  
+
+To transfer train your model
+``` 
+python main.py \
+--train True \
+--modelPath my_new_model.pt \
+--epochs 20 \
+--givenModel my_model.pth
 ```
-#TODO
+To evaluate your trained model
 ```
+python main.py \
+--saveImage True \
+--train False \
+--visualNum 10 \
+--visualFreq 20 \
+--givenModel my_model.pth
+```
+
 
 
 ## Others

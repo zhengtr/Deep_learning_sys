@@ -26,7 +26,7 @@ parser = argparse.ArgumentParser(description='Transfer Resnet50 to Unet')
 parser.add_argument("--saveImage", type=str2bool, default=False)
 parser.add_argument("--train", type=str2bool, default=True)
 parser.add_argument("--modelPath", type=str, default="default.pt")
-parser.add_argument("--saveModel", type=str2bool, default=True)
+# parser.add_argument("--saveModel", type=str2bool, default=True)
 parser.add_argument("--epochs", type=int, default=50)
 parser.add_argument("--visualNum", type=int, default=5)
 parser.add_argument("--visualFreq", type=int, default=1)
@@ -532,14 +532,14 @@ def eval_model(model, save=True):
                 fig.savefig(f"colorization_{time.time()}.png")
         q+=1
 
-def main():
+# def main():
 
-    net_G = build_res_unet(n_input=1, n_output=2, size=256)
-    opt = optim.Adam(net_G.parameters(), lr=1e-4)
-    criterion = nn.L1Loss()
-    pretrain_generator(net_G, train_dl, opt, criterion, 50)
-    if args.saveModel:
-        torch.save(net_G.state_dict(), args.modelPath)
+#     net_G = build_res_unet(n_input=1, n_output=2, size=256)
+#     opt = optim.Adam(net_G.parameters(), lr=1e-4)
+#     criterion = nn.L1Loss()
+#     pretrain_generator(net_G, train_dl, opt, criterion, 50)
+#     if args.saveModel:
+#         torch.save(net_G.state_dict(), args.modelPath)
 
 def load_ResUNet():
     model50 = torch.hub.load('facebookresearch/swav:main', 'resnet50')
@@ -554,7 +554,6 @@ if __name__ == "__main__":
         train_resUNet(epochs=args.epochs, save=args.saveImage)
     else:
         print("start Eval")
-        # uNet = load_ResUNet()
         model50 = load_pretrained_swav("swav_ckp_190.pth")
         body = nn.Sequential(*list(model50.children())[:-2])
         uNet = DynamicUnet(body, 2, (256, 256)).to(device)
