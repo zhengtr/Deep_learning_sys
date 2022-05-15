@@ -182,13 +182,12 @@ Monet:
 python test.py --dataroot ./datasets/monet2photo --name monet2photo --model cycle_gan
 ```
 ## Results
-1. Different self-supervised learning model train loss comparison
-![Self-supervised learning](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SwAV_Train_Loss.png)
-2. Self-supervised learning training loss between baseline and SwAV  
-![Baseline vs SwAV](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SWAV_COND_GAN_Train_Loss.png)
-3. Training loss between SwAV and SimSiam
+1. Self-supervised learning training loss of SwAV and SimSiam
 ![SwAV vs SimSiam](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SWAV_SIMSIAM_Train_Loss_compare.png)
-
+2. Downstream training loss of baseline and SwAV + cond GAN  
+![Baseline vs SwAV](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SWAV_COND_GAN_Train_Loss.png)
+3. Unsuccessful SwAV training
+![Self-supervised learning](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SwAV_Train_Loss.png)
 # Major reference
 
 ### SwAV: 
