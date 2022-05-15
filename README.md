@@ -5,7 +5,10 @@ Created by *Tanran Zheng* and *Yuxiang Zhu*.
 
 Courant Institute of Mathematical Sciences - New York University
 # Introduction
-#TODO: briefly introduce our project in a few sentences
+1. Aming to solve Image-to-Image translation problem with fewer domain specific data.
+2. Leveraging self-supervised learning (SSL) to train backbone with unlabled data.
+3. Applying transfer learning for downstream tasks.
+4. Achieving better result with less data comparing to the baseline.
 # Demo
 1. Colorization results from different models comparison
 ![Colorization results](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/Colorization_Result_Compare.png)
