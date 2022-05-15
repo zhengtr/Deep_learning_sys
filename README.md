@@ -143,8 +143,17 @@ python main.py \
 
 
 
-## Others
-#TODO
+## Results
+1. Different self-supervised learning model train loss comparison
+![Self-supervised learning](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SwAV_Train_Loss.png)
+2. Self-supervised learning training loss between baseline and SwAV  
+![Baseline vs SwAV](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SWAV_COND_GAN_Train_Loss.png)
+3. Training loss between SwAV and SimSiam
+![SwAV vs SimSiam](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/SWAV_SIMSIAM_Train_Loss_compare.png)
+4. Colorization results from different models comparison
+![Colorization results](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/Colorization_Result_Compare.png)
+5. Changing image style to Monet result
+![Change image style](https://github.com/zhengtr/Deep_learning_sys/blob/main/res/Monet.png)
 
 # Major reference
 
