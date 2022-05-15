@@ -548,6 +548,20 @@ def load_ResUNet():
     net_G.load_state_dict(torch.load(args.modelPath, map_location=device))
     return net_G
 
+def openImg(path):
+    SIZE = 256
+    img = Image.open(path).convert("RGB")
+    transformer = transforms.Resize((SIZE, SIZE), Image.BICUBIC)
+    img = transformer(img)
+    img = np.array(img)
+    img_lab = rgb2lab(img).astype("float32")
+    img_lab = transforms.ToTensor()(img_lab)
+    L = img_lab[[0], ...] / 50. - 1.  # Between -1 and 1
+    ab = img_lab[[1, 2], ...] / 110.  # Between -1 and 1
+    temp = L.clone().detach()
+    imgO = torch.cat((temp, temp, temp), 0)
+    return {'L': L, 'ab': ab, 'O': imgO}
+
 if __name__ == "__main__":
     if args.train:
         print("start Train")
